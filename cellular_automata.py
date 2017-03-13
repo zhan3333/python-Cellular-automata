@@ -4,8 +4,9 @@ from pygame.locals import *
 
 win_width = 800
 win_height = 800
-box_num = 80
-life_num = 1200
+box_num = 160
+life_num = 4800
+change_start = True
 
 pygame.init()
 boxs = box_control.init_boxs(box_num, win_width, win_height, life_num)
@@ -29,24 +30,23 @@ while True:
             pygame.quit()
             sys.exit()
         if event.type == KEYDOWN and event.key == K_SPACE:
-            pass
+            change_start = not change_start
 
-    for x in range(0, box_num):
-        for y in range(0, box_num):
-            if boxs[x][y]['value'] == 0:
-                color = (255, 255, 255)
-            else:
-                color = (0, 0, 0)
-            flush_box(color,
-                      pygame.Rect(
-                          boxs[x][y]['x'],
-                          boxs[x][y]['y'],
-                          boxs[x][y]['width'],
-                          boxs[x][y]['height'],
-                      ))
-    box_control.change_boxs(boxs)
+    if change_start:
+        for x in range(0, box_num):
+            for y in range(0, box_num):
+                if boxs[x][y]['value'] == 0:
+                    color = (255, 255, 255)
+                else:
+                    color = (0, 0, 0)
+                    # color = get_random_color()
+                flush_box(color,
+                          pygame.Rect(
+                              boxs[x][y]['x'],
+                              boxs[x][y]['y'],
+                              boxs[x][y]['width'],
+                              boxs[x][y]['height'],
+                          ))
+        box_control.change_boxs(boxs)
 
     pygame.display.update()
-
-
-
