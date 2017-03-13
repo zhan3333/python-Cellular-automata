@@ -2,10 +2,10 @@ import pygame, sys, random
 import box_control
 from pygame.locals import *
 
-win_width = 400
-win_height = 400
-box_num = 20
-life_num = 50
+win_width = 800
+win_height = 800
+box_num = 80
+life_num = 1200
 
 pygame.init()
 boxs = box_control.init_boxs(box_num, win_width, win_height, life_num)
@@ -31,8 +31,8 @@ while True:
         if event.type == KEYDOWN and event.key == K_SPACE:
             pass
 
-    for x in range(0, 20):
-        for y in range(0, 20):
+    for x in range(0, box_num):
+        for y in range(0, box_num):
             if boxs[x][y]['value'] == 0:
                 color = (255, 255, 255)
             else:
