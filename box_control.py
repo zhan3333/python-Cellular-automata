@@ -36,80 +36,80 @@ def change_boxs(boxs):
     # 如果一个细胞周围有3个细胞为生，则将细胞转换为生
     # 如果一个细胞周围有2个细胞为生，则状态保持不变
     # 在其他情况下，细胞都会转为死
-    x_len = len(boxs)
-    for x, v1 in enumerate(boxs):
+    x_len = len(boxs_copy)
+    for x, v1 in enumerate(boxs_copy):
         y_len = len(v1)
         for y, v2 in enumerate(v1):
             count = 0
             # 超过上限
-            if x == x_len-1 and y == y_len-1:
-                if boxs_copy[x-1][y-1]['value'] == 1:
+            if x == x_len-1 and y == y_len-1: # 计算到最右下角网格的情况，x是0到box_num-1因此y_len-1
+                if boxs_copy[x-1][y-1]['value'] == 1: # 左上
                     count += 1
-                if boxs_copy[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1: # 左
                     count += 1
-                if boxs_copy[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1: # 上
                     count += 1
-                if boxs_copy[0][y]['value'] == 1:
+                if boxs_copy[0][y]['value'] == 1: # 相当于下，后同（延拓图）
                     count += 1
-                if boxs_copy[0][y-1]['value'] == 1:
+                if boxs_copy[0][y-1]['value'] == 1: ## 左下，y改为y-1，原来的错了
                     count += 1
-                if boxs_copy[0][0]['value'] == 1:
+                if boxs_copy[0][0]['value'] == 1: # 右下为
                     count += 1
-                if boxs_copy[x][0]['value'] == 1:
+                if boxs_copy[x][0]['value'] == 1: # 右
                     count += 1
-                if boxs_copy[x-1][0]['value'] == 1:
+                if boxs_copy[x-1][0]['value'] == 1: # 右上
                     count += 1
-            elif x == x_len-1:
-                if boxs_copy[x-1][y-1]['value'] == 1:
+            elif x == x_len-1: # 计算到下边界的情况，但不会包括右下角，因为第一个if已经包括了
+                if boxs_copy[x-1][y-1]['value'] == 1: # 左上
                     count += 1
-                if boxs_copy[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1: # 上
                     count += 1
-                if boxs_copy[x-1][y+1]['value'] == 1:
+                if boxs_copy[x-1][y+1]['value'] == 1: # 右上
                     count += 1
-                if boxs_copy[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1: # 左
                     count += 1
-                if boxs_copy[x][y+1]['value'] == 1:
+                if boxs_copy[x][y+1]['value'] == 1: # 右
                     count += 1
-                if boxs_copy[0][y-1]['value'] == 1:
+                if boxs_copy[0][y-1]['value'] == 1: # 相当于左下，后同（延拓图）
                     count += 1
-                if boxs_copy[0][y]['value'] == 1:
+                if boxs_copy[0][y]['value'] == 1: # 下
                     count += 1
-                if boxs_copy[0][y+1]['value'] == 1:
+                if boxs_copy[0][y+1]['value'] == 1: # 右下
                     count += 1
-                pass
-            elif y == y_len-1:
-                if boxs_copy[x-1][y-1]['value'] == 1:
+            elif y == y_len-1: # 右边界的情况，但是不会包括右下角
+                if boxs_copy[x-1][y-1]['value'] == 1:  # 左上
                     count += 1
-                if boxs_copy[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1: # 左
                     count += 1
-                if boxs_copy[x+1][y-1]['value'] == 1:
+                if boxs_copy[x+1][y-1]['value'] == 1: # 左下
                     count += 1
-                if boxs_copy[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1: # 上
                     count += 1
-                if boxs_copy[x+1][y]['value'] == 1:
+                if boxs_copy[x+1][y]['value'] == 1: # 下
                     count += 1
-                if boxs_copy[x-1][0]['value'] == 1:
+                if boxs_copy[x-1][0]['value'] == 1: # 相当于右上
                     count += 1
-                if boxs_copy[x][0]['value'] == 1:
+                if boxs_copy[x][0]['value'] == 1: # 右
                     count += 1
-                if boxs_copy[x+1][0]['value'] == 1:
+                if boxs_copy[x+1][0]['value'] == 1: # 右下
                     count += 1
-            else:
-                if boxs_copy[x-1][y-1]['value'] == 1:
+            # 这里不考虑左边和上边，因为0-1=-1，索引-1就等于倒数第一个，相当于自动转换了
+            else: # 其他情况，即非右或下边界的网格
+                if boxs_copy[x-1][y-1]['value'] == 1: # 左上
                     count += 1
-                if boxs_copy[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1: # 上
                     count += 1
-                if boxs_copy[x-1][y+1]['value'] == 1:
+                if boxs_copy[x-1][y+1]['value'] == 1: # 右上
                     count += 1
-                if boxs_copy[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1: # 左
                     count += 1
-                if boxs_copy[x][y+1]['value'] == 1:
+                if boxs_copy[x][y+1]['value'] == 1: # 右
                     count += 1
-                if boxs_copy[x+1][y-1]['value'] == 1:
+                if boxs_copy[x+1][y-1]['value'] == 1: # 左下
                     count += 1
-                if boxs_copy[x+1][y]['value'] == 1:
+                if boxs_copy[x+1][y]['value'] == 1: # 下
                     count += 1
-                if boxs_copy[x+1][y+1]['value'] == 1:
+                if boxs_copy[x+1][y+1]['value'] == 1: # 右下
                     count += 1
 
             if count == 3:
