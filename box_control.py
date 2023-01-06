@@ -31,6 +31,7 @@ def get_life_coordinate(box_num, life_num):
 
 
 def change_boxs(boxs):
+    boxs_copy = boxs.copy() # 建立一个副本
     # 进行一次细胞变换
     # 如果一个细胞周围有3个细胞为生，则将细胞转换为生
     # 如果一个细胞周围有2个细胞为生，则状态保持不变
@@ -42,73 +43,73 @@ def change_boxs(boxs):
             count = 0
             # 超过上限
             if x == x_len-1 and y == y_len-1:
-                if boxs[x-1][y-1]['value'] == 1:
+                if boxs_copy[x-1][y-1]['value'] == 1:
                     count += 1
-                if boxs[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1:
                     count += 1
-                if boxs[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1:
                     count += 1
-                if boxs[0][y]['value'] == 1:
+                if boxs_copy[0][y]['value'] == 1:
                     count += 1
-                if boxs[0][y]['value'] == 1:
+                if boxs_copy[0][y-1]['value'] == 1:
                     count += 1
-                if boxs[0][0]['value'] == 1:
+                if boxs_copy[0][0]['value'] == 1:
                     count += 1
-                if boxs[x][0]['value'] == 1:
+                if boxs_copy[x][0]['value'] == 1:
                     count += 1
-                if boxs[x-1][0]['value'] == 1:
+                if boxs_copy[x-1][0]['value'] == 1:
                     count += 1
             elif x == x_len-1:
-                if boxs[x-1][y-1]['value'] == 1:
+                if boxs_copy[x-1][y-1]['value'] == 1:
                     count += 1
-                if boxs[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1:
                     count += 1
-                if boxs[x-1][y+1]['value'] == 1:
+                if boxs_copy[x-1][y+1]['value'] == 1:
                     count += 1
-                if boxs[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1:
                     count += 1
-                if boxs[x][y+1]['value'] == 1:
+                if boxs_copy[x][y+1]['value'] == 1:
                     count += 1
-                if boxs[0][y-1]['value'] == 1:
+                if boxs_copy[0][y-1]['value'] == 1:
                     count += 1
-                if boxs[0][y]['value'] == 1:
+                if boxs_copy[0][y]['value'] == 1:
                     count += 1
-                if boxs[0][y+1]['value'] == 1:
+                if boxs_copy[0][y+1]['value'] == 1:
                     count += 1
                 pass
             elif y == y_len-1:
-                if boxs[x-1][y-1]['value'] == 1:
+                if boxs_copy[x-1][y-1]['value'] == 1:
                     count += 1
-                if boxs[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1:
                     count += 1
-                if boxs[x+1][y-1]['value'] == 1:
+                if boxs_copy[x+1][y-1]['value'] == 1:
                     count += 1
-                if boxs[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1:
                     count += 1
-                if boxs[x+1][y]['value'] == 1:
+                if boxs_copy[x+1][y]['value'] == 1:
                     count += 1
-                if boxs[x-1][0]['value'] == 1:
+                if boxs_copy[x-1][0]['value'] == 1:
                     count += 1
-                if boxs[x][0]['value'] == 1:
+                if boxs_copy[x][0]['value'] == 1:
                     count += 1
-                if boxs[x+1][0]['value'] == 1:
+                if boxs_copy[x+1][0]['value'] == 1:
                     count += 1
             else:
-                if boxs[x-1][y-1]['value'] == 1:
+                if boxs_copy[x-1][y-1]['value'] == 1:
                     count += 1
-                if boxs[x-1][y]['value'] == 1:
+                if boxs_copy[x-1][y]['value'] == 1:
                     count += 1
-                if boxs[x-1][y+1]['value'] == 1:
+                if boxs_copy[x-1][y+1]['value'] == 1:
                     count += 1
-                if boxs[x][y-1]['value'] == 1:
+                if boxs_copy[x][y-1]['value'] == 1:
                     count += 1
-                if boxs[x][y+1]['value'] == 1:
+                if boxs_copy[x][y+1]['value'] == 1:
                     count += 1
-                if boxs[x+1][y-1]['value'] == 1:
+                if boxs_copy[x+1][y-1]['value'] == 1:
                     count += 1
-                if boxs[x+1][y]['value'] == 1:
+                if boxs_copy[x+1][y]['value'] == 1:
                     count += 1
-                if boxs[x+1][y+1]['value'] == 1:
+                if boxs_copy[x+1][y+1]['value'] == 1:
                     count += 1
 
             if count == 3:
