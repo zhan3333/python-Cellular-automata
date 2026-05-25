@@ -72,6 +72,16 @@ class Box:
                 cells.append(cell)
         return cells
 
+    # 根据窗口坐标切换指定单元状态
+    def toggle_cell_at_position(self, x: int, y: int):
+        if x < 0 or x >= self.window_width or y < 0 or y >= self.window_height:
+            return None
+        row = int(x / (self.window_width / self.row_num))
+        col = int(y / (self.window_height / self.col_num))
+        cell = self.cells[row][col]
+        cell.value = 0 if cell.value == 1 else 1
+        return cell, row, col
+
     # 根据自动机规则，刷新状态
     # 返回状态变更了的单元
     def flush(self) -> [Cell]:

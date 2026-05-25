@@ -1,33 +1,118 @@
-## What is it?
+# Python Cellular Automata
 
-元胞自动机（Cellular Automata） 是 20 世纪50 年代初由计算机之父冯·诺依曼（J.von Neumann） 为了模拟生命系统所具有的自复制功能而提出来的。此后，史蒂芬·沃尔夫勒姆（Stephen Wolfram） 对元胞自动机理论进行了深入的研究，例如，他对一维初等元胞机全部256 种规则所产生的模型进行了深入研究，并将元胞自动机分为平稳型、周期型、混沌型和复杂型4 种类型。元胞自动机采用离散的空间布局和离散的时间间隔，将元胞分成有限种状态，元胞个体状态的演变仅与其当前状态以及其某个局部邻域的状态有关。
+English | [中文](./README_zh.md)
 
-## How to run?
+A two-dimensional cellular automata demo built with Python and Pygame. The current implementation uses the classic Conway's Game of Life rules: each cell's next state is determined by the number of live cells in its 8-cell neighborhood, then rendered as a black-and-white grid animation.
 
-- Need `Python3` and `pip3`
-  - `pip install pygame` 
-  - `python3 ./cellular_automata.py`
+![Cellular automata demo](./元胞自动机.gif)
 
 ## Features
 
-- 重构：使用更少的代码实现
-- 每个单元的下一个状态，取决于相邻8个单元的状态
-- 每 tick 只绘制变化了的单元
-- 容器上下互联、左右互联
-- Class 储存状态
-- 空格暂停/恢复程序运行
+- Draws an 800 x 800 automata grid with `pygame`
+- Shows a multi-line operation log in the right-side panel
+- Uses a default grid size of `160 x 160`
+- Randomly initializes 4800 live cells by default
+- Computes each generation from the 8 neighboring cells
+- Wraps edges horizontally and vertically, forming a toroidal space
+- Redraws only cells whose state changed on each simulation step
+- Supports pausing and resuming with the space bar
+- Supports left-clicking a cell to manually toggle it alive or dead
+- Shows the current running state and recent operations as ASCII text
+- Provides a `Help` button with rules and controls
+- Provides a `Pause` / `Resume` button to control automatic evolution
 
-## Rule
+## Requirements
 
-- 当前细胞为存活状态时，当周围的存活细胞低于2个时（不包含2个），该细胞变成死亡状态。（模拟生命数量稀少）
-- 当前细胞为存活状态时，当周围有2个或3个存活细胞时，该细胞保持原样。
-- 当前细胞为存活状态时，当周围有超过3个存活细胞时，该细胞变成死亡状态。（模拟生命数量过多）
-- 当前细胞为死亡状态时，当周围有3个存活细胞时，该细胞变成存活状态。（模拟繁殖）
+- Python 3
+- pygame
 
-## How it works?
+Install dependencies:
 
-利用 pygame 库，将程序屏幕划分为 x * x 元胞自动机格大小，每格维护自己的状态，每 tick 按照原胞自动机的原理更新所有格的状态，并渲染出不同的颜色。
+```bash
+pip3 install pygame
+```
 
-## How is the effect?
+Run the project:
 
-![](./元胞自动机.gif)
+```bash
+python3 cellular_automata.py
+```
+
+After launch, a Pygame window opens:
+
+- Black cells are alive
+- White cells are dead
+- Press `Space` to pause or resume
+- Click `Pause` / `Resume` on the right side to pause or resume
+- Left-click a grid cell to toggle its state
+- Click `Help` on the right side to view the game rules and controls
+- Press `Esc` or click `Close` in the Help window to close it
+- The right-side log panel shows recent clicks and pause/resume actions
+- Close the window to exit
+
+## Project Structure
+
+```text
+.
+├── README.md
+├── README_zh.md
+├── box.py
+├── cellular_automata.py
+└── 元胞自动机.gif
+```
+
+- `cellular_automata.py`: application entry point; initializes the window, creates the random starting state, handles events, and draws the screen
+- `box.py`: defines `Cell` and `Box`; maintains the grid, looks up neighbors, and applies the Game of Life rules
+- `元胞自动机.gif`: demo animation
+
+## Rules
+
+Each cell has two possible states:
+
+- `1`: alive
+- `0`: dead
+
+On each simulation step, the program counts the live cells in the current cell's 8-cell neighborhood and applies these rules:
+
+- A live cell with fewer than 2 live neighbors dies
+- A live cell with 2 or 3 live neighbors stays alive
+- A live cell with more than 3 live neighbors dies
+- A dead cell with exactly 3 live neighbors becomes alive
+
+## Configuration
+
+You can edit these values at the top of `cellular_automata.py`:
+
+```python
+grid_width = 800
+grid_height = 800
+log_panel_width = 280
+win_width = grid_width + log_panel_width
+win_height = grid_height
+row_cell_num = 160
+life_num = 4800
+max_log_lines = 40
+frame_rate = 60
+simulation_interval_ms = 1000
+```
+
+- `grid_width` / `grid_height`: automata grid width and height
+- `log_panel_width`: width of the right-side log panel
+- `win_width` / `win_height`: total window width and height
+- `row_cell_num`: number of cells per row and column
+- `life_num`: number of live cells created randomly at startup
+- `max_log_lines`: maximum number of operation log lines shown in the right-side panel
+- `frame_rate`: frame rate for UI refresh and event handling
+- `simulation_interval_ms`: interval between simulation steps, in milliseconds
+
+The program uses `frame_rate` to keep mouse and keyboard input responsive, while `simulation_interval_ms` controls the automata evolution speed separately. By default, the simulation advances once every 1000 ms. Lower this value to make it evolve faster.
+
+## Implementation Notes
+
+`Box.flush()` first copies the current grid state, then computes every cell's next state from that old snapshot. This prevents one cell updated earlier in a generation from affecting other cells in the same generation.
+
+After each step, `flush()` returns only the cells whose state changed. The main loop redraws those cells only, reducing unnecessary drawing work.
+
+## Background
+
+Cellular automata are computational models made of discrete space, discrete time, and finite cell states. Each cell updates its state according to fixed rules based on itself and its local neighborhood. Conway's Game of Life is one of the best-known two-dimensional cellular automata: very simple local rules can produce rich and complex dynamic patterns.
